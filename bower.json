@@ -1,0 +1,7 @@
+{
+  "name": "clever-core-list#gh-pages",
+  "private": true,
+  "dependencies": {
+    "clever-core-list": "rsamec/clever-core-list#master"
+  }
+}

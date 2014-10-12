@@ -1,0 +1,99 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-list/core-list.html">
+
+<!--
+Element that extends core-list to support validation rules per list item.
+
+##### Example
+
+  <clever-core-list items="{{data.Hobbies}}" rules="{{rules.Children['Hobbies']}}"
+                      on-array-item-changed="{{validate}}">
+
+@element seed-element
+@blurb Element that extends core-list to support validation rules per list item.
+@status alpha
+@homepage http://rsamec.github.io/clever-core-list
+-->
+<polymer-element name="clever-core-list" extends="core-list" attributes="items rules">
+    <template>
+        <shadow></shadow>
+    </template>
+  <script>
+    Polymer({
+        /**
+         * `items` is an array of source data for the list to display.
+         *
+         * @property items
+         * @type data array
+         */
+        items:undefined,
+        /**
+         * `rules` are validation rules for collection-based structures (arrays).
+         *
+         * @property rules
+         * @type rules for collection-based structures (arrays).
+         */
+        rules:undefined,
+        ready: function () {
+            //this.data = [];
+            this._observers = [];
+        },
+        itemsChanged: function (splices) {
+            this.bindRulesToItems(splices);
+        },
+        rulesChanged: function () {
+            this.bindRulesToItems();
+        },
+        bindRulesToItems: function (splices) {
+            if (this.rules === undefined || this.items === undefined) return;
+
+            //TODO: only for demo purpose
+            this.rules.RefreshRows(this.items);
+
+            var wrap = function (item, index) {
+                var _index = index;
+                if (splices !== undefined) _index = index + splices[0].index;
+
+                var row = {data: item, rules: this.rules.Rows[_index], index: _index};
+
+
+                var observer = new ObjectObserver(item);
+                observer.open(function (newValue, oldValue) {
+                    //validate row
+                    row.rules.Validate(row.data);
+                    //change event
+                    this.asyncFire('array-item-changed', {
+                        oldValue: oldValue,
+                        newValue: newValue,
+                        index: _index
+                    });
+                }.bind(this));
+                this._observers.push(observer);
+
+                return row;
+            }.bind(this);
+
+            if (splices === undefined) {
+                this.data = this.items.map(wrap);
+                return;
+            }
+
+            var splice = splices[0];
+            var added = this.items.slice(splice.index, splice.index + splice.addedCount).map(wrap);
+
+            this.data.splice.apply(this.data, [splice.index, splice.removed.length].concat(added));
+        }
+    });
+
+  </script>
+
+</polymer-element>
