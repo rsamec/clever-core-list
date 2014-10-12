@@ -22,10 +22,11 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^0.4.1",
-    "core-list": "polymer/core-list#~0.4.2"
+    "core-list": "polymer/core-list#~0.4.2",
+    "clever-paper-input":"latest",
+    "clever-rule-service":"latest"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^0.7.3",
-    "clever-paper-input":"latest"
+    "web-component-tester": "Polymer/web-component-tester#^0.7.3"
   }
 }
