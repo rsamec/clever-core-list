@@ -1,0 +1,31 @@
+{
+  "name": "clever-core-list",
+  "version": "1.0.1",
+  "authors": [
+    "Roman Samec <roman.samec2@gmail.com>"
+  ],
+  "description": "Element that extends core-list to support validation rules per list item.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed",
+    "validation",
+    "rules"
+  ],
+  "main": "clever-core-list.html",
+  "license": "MIT",
+  "homepage": "https://github.com/rsamec/clever-core-list/",
+  "ignore": [
+    "/.*",
+    "/tests/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.4.1",
+    "core-list": "polymer/core-list#~0.4.2"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^0.7.3",
+    "clever-paper-input":"latest"
+  }
+}

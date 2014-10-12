@@ -1,0 +1,62 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>seed-element Demo</title>
+
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="../clever-rule-service/clever-rule-service.html">
+  <link rel="import" href="../clever-paper-input/clever-paper-input.html">
+  <link rel="import" href="clever-core-list.html">
+
+</head>
+<body unresolved>
+
+  <p>An example of using <code>&lt;clever-core-list></code>:</p>
+  <template id="demo-form" is="auto-binding">
+
+    <clever-rule-service rules="{{rules}}" url="api/meta-rules.json"></clever-rule-service>
+
+    <input type="button" on-click="{{addButtonClick}}" value="Add" />
+    <clever-core-list items="{{data.Hobbies}}" rules="{{rules.Children['Hobbies']}}"
+                      on-array-item-changed="{{validate}}"  height="380">
+
+        <template>
+            <div horizontal layout>
+
+                <!--<div class="subject">Row: {{index}}, Record ID: {{model.id | json}}</div>-->
+                <clever-paper-input label="Name" placeholder="Name" rule="{{model.rules.Rules['HobbyName']}}"
+                                    value="{{model.data.HobbyName}}" layout vertical></clever-paper-input>
+                <!--<validation-error rule="{{_.rules.Rules['HobbyName'].ValidationFailures.required.Error}}"></validation-error>-->
+                <!--{{_.data.HobbyName | json}}-->
+
+                <input type="button" style="margin-top:10px;height:30px;" on-click="{{removeButtonClick}}" value="X" index="{{index}}" />
+            </div>
+        </template>
+    </clever-core-list>
+  </template>
+  <script>
+
+      var t = document.querySelector('#demo-form');
+      t.addEventListener('template-bound', function () {
+          t.data = {Hobbies:[{}]};
+      });
+      t.addButtonClick = function () {
+          this.data.Hobbies.push({});
+      };
+      t.removeButtonClick = function (event, detail, sender) {
+          var index = parseInt(sender.attributes["index"].value,10);
+          this.data.Hobbies.splice(index, 1);
+      };
+  </script>
+</body>
+</html>
