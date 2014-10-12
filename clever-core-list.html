@@ -11,11 +11,12 @@
 <link rel="import" href="../core-list/core-list.html">
 
 <!--
-Element providing solution to no problem in particular.
+Element that extends core-list to support validation rules per list item.
 
 ##### Example
 
-    <clever-core-list></clever-core-list>
+  <clever-core-list items="{{data.Hobbies}}" rules="{{rules.Children['Hobbies']}}"
+                      on-array-item-changed="{{validate}}">
 
 @element seed-element
 @blurb Element that extends core-list to support validation rules per list item.
@@ -28,6 +29,20 @@ Element providing solution to no problem in particular.
     </template>
   <script>
     Polymer({
+        /**
+         * `items` is an array of source data for the list to display.
+         *
+         * @property items
+         * @type data array
+         */
+        items:undefined,
+        /**
+         * `rules` are validation rules for collection-based structures (arrays).
+         *
+         * @property rules
+         * @type rules for collection-based structures (arrays).
+         */
+        rules:undefined,
         ready: function () {
             //this.data = [];
             this._observers = [];
