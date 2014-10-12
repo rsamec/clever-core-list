@@ -1,7 +1,7 @@
 clever-core-list
 ============
 
-    See the [component page] (http://rsamec.github.io/clever-core-list) for more information.
+See the [component page] (http://rsamec.github.io/clever-core-list) for more information.
 
 ## Getting Started
 
