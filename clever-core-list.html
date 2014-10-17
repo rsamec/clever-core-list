@@ -89,7 +89,7 @@ Element that extends core-list to support validation rules per list item.
 
             var splice = splices[0];
             var added = this.items.slice(splice.index, splice.index + splice.addedCount).map(wrap);
-            var removedNum = splice.removed!==undefined?0:splice.removed.length;
+            var removedNum = splice.removed===undefined?0:splice.removed.length;
             this.data.splice.apply(this.data, [splice.index, removedNum].concat(added));
         }
     });
